@@ -64,14 +64,15 @@ class MusicDataset(torch.utils.data.Dataset):
             
             for row in csv_reader:
                 if (row[label_row] in allowed_genres): 
-                
-                    #remember audiofile paths and corresponding labels
+                    #check if the file from csv exists on given path
                     audio_path = os.path.join(path,row[label_row],row[name_row])
-                    self.path_label.append((audio_path, row[label_row])) 
+                    if(os.path.isfile(audio_path)):
+                        #remember audiofile paths and corresponding labels
+                        self.path_label.append((audio_path, row[label_row])) 
                     
-                    #remember all possible classes
-                    if (row[label_row] not in self.classes):
-                        self.classes.append(row[label_row])
+                        #remember all possible classes
+                        if (row[label_row] not in self.classes):
+                            self.classes.append(row[label_row])
                         
 
         #create onehot encoding for data labels
